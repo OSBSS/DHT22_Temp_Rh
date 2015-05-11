@@ -1,12 +1,11 @@
-// OSBSS Temp/Rh using DHT22 - v0.3.2
+// OSBSS Temp/Rh using DHT22 - v0.3.3
 
 #include "DHT.h"
 #include <SD.h>
 #include <Wire.h>
-#include <Time.h>
 #include <DS3234.h>
 
-DHT sensor;
+DHT sensor(2, DHT22);
 
 int ID = 1;
 int h = 19, m = 00, s = 0; // set the start time in 24-hr clock
@@ -17,7 +16,7 @@ void setup()
   delay(500);
   RTC.configure(5,6,7,9);
   pinMode(10, OUTPUT);
-  dht.setup(2);
+  sensor.begin();
   SD.begin(8);
   PrintHeader();
   CheckTime();
@@ -83,8 +82,8 @@ void loop()
 
 void GetData() // this function will get the sensor data with an Onset HOBO U12
 {
-  temp = dht.getTemperature();
-  Rh = dht.getHumidity();
+  temp = sensor.readTemperature();
+  Rh = sensor.readHumidity();
   //temp = 1.0073 * temp; // sensor calibration with HOBO U12
   //Rh = 0.8218 * Rh;
   //temp = 1.0078 * temp; // sensor calibration with HOBO U12
