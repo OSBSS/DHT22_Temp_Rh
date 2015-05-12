@@ -2,6 +2,7 @@
 
 #include "DHT.h"
 #include <SD.h>
+#include <SPI.h>
 #include <Wire.h>
 #include <DS3234.h>
 
